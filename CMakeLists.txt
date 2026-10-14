@@ -18,11 +18,12 @@ target_compile_options(library_manager PRIVATE
         $<$<CXX_COMPILER_ID:AppleClang,Clang,GNU>:-Wall;-Wextra;-Wpedantic;-Wconversion>
 )
 
-add_executable(library_manager_app main.cpp)
+add_executable(library_manager_app src/main.cpp)
 target_link_libraries(library_manager_app PRIVATE library_manager)
 
-include(CTest)
+option(BUILD_TESTING "Build the test suite" ON)
 if(BUILD_TESTING)
+    enable_testing()
     add_executable(library_manager_tests tests/library_manager_tests.cpp)
     target_link_libraries(library_manager_tests PRIVATE library_manager)
     add_test(NAME library_manager_tests COMMAND library_manager_tests)
